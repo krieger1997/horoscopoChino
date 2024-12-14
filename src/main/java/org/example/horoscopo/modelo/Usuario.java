@@ -10,6 +10,7 @@ public class Usuario {
     private LocalDate fechaNacimiento;
     private String password;
     private int id;
+    private String animal;
 
 
     public Usuario() {
@@ -37,9 +38,7 @@ public class Usuario {
     public String getNombre() {
         return nombre;
     }
-    public String getNombreCap(){
-        return nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
-    }
+
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -86,6 +85,14 @@ public class Usuario {
         this.id = id;
     }
 
+    public String getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(String animal) {
+        this.animal = animal;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -95,6 +102,7 @@ public class Usuario {
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", password='" + password + '\'' +
                 ", id=" + id +
+                ", animal='" + animal + '\'' +
                 '}';
     }
 }

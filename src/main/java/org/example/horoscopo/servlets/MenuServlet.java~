@@ -16,4 +16,6 @@ public class MenuServlet extends HttpServlet {
         req.getRequestDispatcher("view/menu.jsp").forward(req, resp);
     }
 
+
+
 }

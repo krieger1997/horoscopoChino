@@ -1,4 +1,4 @@
-<%@ page import="org.example.horoscopo.modelo.Usuario" %><%--
+<%@ page import="org.example.horoscopo.dto.UsuarioDTO" %><%--
   Created by IntelliJ IDEA.
   User: Claud
   Date: 08/12/2024
@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     // Recuperar el usuario de la sesión
-    Usuario user = (Usuario) session.getAttribute("user");
+    UsuarioDTO user = (UsuarioDTO) session.getAttribute("user");
 
     if (user == null) {
         // Si no hay usuario en sesión, redirigir al login
@@ -28,17 +28,55 @@
             <a href="/horoscopo" style="min-width: 80%" role="button" class="btn btn-outline-dark">Conocer tu animal</a>
         </div>
         <div class="col col-lg-3 d-flex justify-content-center">
-            <a href="/listaUsuarios" style="min-width: 80%" role="button" class="btn btn-outline-dark">Buscar usuarios</a>
+            <a href="/userList" style="min-width: 80%" role="button" class="btn btn-outline-dark">Buscar usuarios</a>
         </div>
         <div class="col col-lg-3 d-flex justify-content-center">
-            <a href="/modificaUsuario" style="min-width: 80%" role="button" class="btn btn-outline-dark">Modificar datos</a>
+            <a href="/editUser" style="min-width: 80%" role="button" class="btn btn-outline-dark">Modificar datos</a>
         </div>
         <div class="col col-lg-3 d-flex justify-content-center">
-            <a href="/eliminaUsuario?id=${user.getId()}" style="min-width: 80%" role="button" class="btn btn-outline-dark">Eliminar cuenta</a>
+            <a  id="eliminaUsuario" style="min-width: 80%" role="button"
+               class="btn btn-outline-dark">Eliminar cuenta</a>
         </div>
 
     </div>
 </div>
 
+<script>
+    window.addEventListener("load", (event) => {
 
+        <%
+            String error = (String) request.getAttribute("error");
+            String success = (String) request.getAttribute("success");
+            if (error != null) {
+        %>
+        <%--alert("<%= error %>");--%>
+        mensajeError("<%= error %>")
+        <%
+            }else if(success!=null){
+              %>
+        <%--alert("<%= success %>");--%>
+        mensajeSuccess("<%= success %>")
+        <%
+            }
+        %>
+
+        document.getElementById("eliminaUsuario").addEventListener("click", (event) => {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "No podras revertir esta accion!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    window.location.href = "/deleteUser?id=${user.getId()}";
+                }
+            })
+        })
+    });
+</script>
 <jsp:include page="template/foot.jsp"/>

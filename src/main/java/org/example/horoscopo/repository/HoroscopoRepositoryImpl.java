@@ -1,4 +1,4 @@
-package org.example.horoscopo.dao;
+package org.example.horoscopo.repository;
 
 import org.example.horoscopo.modelo.Horoscopo;
 import org.example.horoscopo.procesaConexion.DbConexion;
@@ -11,15 +11,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoroscopoDaoImpl implements HoroscopoDao {
+public class HoroscopoRepositoryImpl implements HoroscopoRepository{
+
     Connection connection;
 
-    public HoroscopoDaoImpl() {
+    public HoroscopoRepositoryImpl() {
         connection = DbConexion.getInstance().getConnection();
     }
 
     @Override
-    public List<Horoscopo> getHoroscopo() {
+    public List<Horoscopo> getHoroscopoList() {
         try {
             String sql = "SELECT ANIMAL, FECHA_INICIO, FECHA_FIN FROM HOROSCOPO;";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -38,5 +39,7 @@ public class HoroscopoDaoImpl implements HoroscopoDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }
